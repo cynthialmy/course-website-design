@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script type="text/javascript" src="d3/d3.v3.js"></script>
+
+    <title>CS 7450 - Information Visualization - Spring 2023</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="icon" type="image/ico" href="http://www.cc.gatech.edu/~stasko/7450/favicon.ico">
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    <img src="resources/logo.png" width="150" height="90">
+                </div>
+                <div class="col-md-10">
+                    <h1 class="logo">CS 7450 - Information Visualization - Spring 2023</h1>
+
+                    <div class="btn-group btn-group-md" role="group" aria-label="...">
+                        <a href="index.html" class="btn btn-default" role="button">Home</a>
+                        <a href="courseInfo.html" class="btn btn-default" role="button">Course Info</a>
+                        <a href="schedule.html" class="btn btn-default" role="button">Schedule</a>
+                        <a href="readings.html" class="btn btn-default" role="button">Readings</a>
+                        <a href="resources.html" class="btn btn-default" role="button">Resources</a>
+                        <a href="instructor.html" class="btn btn-default" role="button">Instructor</a>
+                        <a href="teachingAssistant.html" class="btn btn-default" role="button">TA</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h3>Course Home</h3>
+        <table border="0">
+            <tbody>
+                <tr>
+                    <td>
+                        <b>Instructor:</b> <a href="https://faculty.cc.gatech.edu/~stasko">John Stasko</a><br>
+                        Spring 2023<br>
+                        Tue,Thu 2:00 - 3:15 pm<br>
+                        Instructional Center room 109<br>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="col-md-10">
+            <div id="draw_here"></div>
+        </div>
+
+
+    </div>
+
+    <script>
+        data = [
+            {
+                "key": "Visualization", "value": "Computer-based information visualization centers around helping people explore or explain data through interactive software that exploits the capabilities of the human perceptual system. A key challenge in information visualization is designing a cognitively useful spatial mapping of a dataset that is not inherently spatial and accompanying the mapping by interaction techniques that allow people to intuitively explore the dataset.Information visualization draws on the intellectual history of several traditions, including computer graphics, human- computer interaction, cognitive psychology, semiotics, graphic design, statistical graphics, cartography, and art.The synthesis of relevant ideas from these fields with new methodologies and techniques made possible by interactive computation are critical for helping people keep pace with the torrents of data confronting them."
+            },
+            {
+                "key": "This Course", "value": "This course is an advanced information visualization course focusing on research within this domain. Students should already have a good working knowledge of data visualization along the lines of what one would get from taking CS 4460 or CS 6730 at Georgia Tech.This course (CS 7450) is not intended to be a student's first exposure to the data visualization area."
+            },
+            {
+                "key": "Course Format", "value": "The course will follow a general lecture/seminar style. For one day per week, we will focus on visualization research.We will read research papers on some topic / theme, students will make presentations about the papers, and we will discuss.One goal is to try to develop ideas for new research projects.On the other day per week, we will focus on visualization system / application development.Students will learn how to develop interactive visualization tools using languages and libraries like d3 and javascript."
+            },
+        ];
+
+        //Create SVG element
+        var doc = d3.select("#draw_here");
+
+        var doc_item = doc.selectAll("div")
+            .data(data)
+            .enter()
+            .append("div");
+
+        doc_item.append("h3")
+            .text(function (d) {
+                return d.key;
+            })
+
+        doc_item.append("p")
+            .text(function (d) {
+                return d.value;
+            })
+            .style("font-size", "15px");
+    </script>
+    <div align="center">
+        <center>
+            <p class="sig"><a href="https://github.com/cynthialmy">Mengyuan Li (Cynthia)<br>mli461@gatech.edu</a>
+            <p class="sig"><a href="http://www.cc.gatech.edu/">Copyright © College
+                    of Computing<br>Any unauthorized reproduction or use is strictly
+                    prohibited.</a>
+            </p>
+        </center>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script type="text/javascript" src="d3/d3.v3.js"></script>
+
+    <title>CS 7450 - Information Visualization - Spring 2023</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="icon" type="image/ico" href="http://www.cc.gatech.edu/~stasko/7450/favicon.ico">
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    <img src="resources/logo.png" width="150" height="90">
+                </div>
+                <div class="col-md-10">
+                    <h1 class="logo">CS 7450 - Information Visualization - Spring 2023</h1>
+                    <div class="btn-group btn-group-md" role="group" aria-label="...">
+                        <a href="index.html" class="btn btn-default" role="button">Home</a>
+                        <a href="courseInfo.html" class="btn btn-default" role="button">Course Info</a>
+                        <a href="schedule.html" class="btn btn-default" role="button">Schedule</a>
+                        <a href="readings.html" class="btn btn-default" role="button">Readings</a>
+                        <a href="resources.html" class="btn btn-default" role="button">Resources</a>
+                        <a href="instructor.html" class="btn btn-default" role="button">Instructor</a>
+                        <a href="teachingAssistant.html" class="btn btn-default" role="button">TA</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container">
+        <h3>Readings</h3>
+
+        <table id="reading-list-table" border="0">
+            <tbody>
+                <tr>
+                    <td id="reading-list-td" width="800">
+
+                        Below are the lists of papers for each class' topic. Tuesdays will be
+                        a focus on recent infovis research topics. Thursdays will be a focus
+                        on learning to develop visualization applications through programming.
+
+                        <body>
+                            <div id="main">
+                                <table id="reading-table">
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <div id="my_dataviz"></div>
+                        </body>
+                        <script src="https://d3js.org/d3.v6.min.js"></script>
+                        <script
+                            src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3.layout.cloud.js"></script>
+                        <script>
+                            d3.csv('https://raw.githubusercontent.com/fuyuGT/CS7450-data/main/hw2-papers.csv').then(function (data) {
+                                console.log(data)
+                                var reading_list_td = d3.select('#reading-list-td');
+
+                                var topics = [];
+
+                                for (let i = 0; i < data.length; i++) {
+                                    var week_topic = "Week " + String(data[i]["Week "]) + " - " + data[i].Topic;
+                                    data[i]["week_topic"] = week_topic;
+                                    if (!topics.includes(week_topic)) {
+                                        topics.push("Week " + String(data[i]["Week "]) + " - " + data[i].Topic)
+                                    }
+                                }
+                                console.log(data)
+
+                                for (let i = 0; i < topics.length; i++) {
+                                    reading_list_td.append('p')
+                                        // .append('br')
+                                        // .append('a')
+                                        .attr("name", topics[i])
+                                        .attr("class", "topic")
+                                        .append('text')
+                                        .text(topics[i])
+                                        .style("font-size", "20px")
+
+                                    var filteredPaper = data.filter(d => d.week_topic === topics[i])
+                                    console.log(filteredPaper)
+
+                                    var reading_list_div =
+                                        reading_list_td
+                                            .append("div").attr("class", "topic-div");
+
+                                    reading_list_div
+                                        .selectAll(".topic-div")
+                                        .data(filteredPaper)
+                                        .enter()
+                                        .append('li')
+                                        .attr("id", "paper-name")
+                                        .append('text')
+                                        .text(function (paper) {
+                                            return paper['Date'] + " - Paper: ";
+                                        })
+                                        .style("font-size", "14px")
+                                        .append('text')
+                                        .text(function (paper) {
+                                            return paper['Paper'];
+                                        })
+                                        .style("font-size", "14px");
+                                }
+
+                                d3.selectAll("#paper-name")
+                                    .append("a")
+                                    .attr("href", function (paper) {
+                                        return paper['Link'];
+                                    })
+                                    .html(" (Link)");
+
+                                d3.selectAll(".topic-div")
+                                    .append('hr');
+
+
+                            });
+                        </script>
+
+                        <script type="text/javascript" src="../d3/d3.v5.min.js"></script>
+                        <script src="force.js"></script>
+                        <hr>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div align="center">
+        <center>
+            <p class="sig"><a href="https://github.com/cynthialmy">Mengyuan Li (Cynthia)<br>mli461@gatech.edu</a>
+            <p class="sig"><a href="http://www.cc.gatech.edu/">Copyright © College
+                    of Computing<br>Any unauthorized reproduction or use is strictly
+                    prohibited.</a>
+            </p>
+        </center>
+    </div>
+
+    <script type="text/javascript">
+
+    </script>
+
+</body>
+
+</html>
